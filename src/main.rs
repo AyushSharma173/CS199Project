@@ -1,16 +1,17 @@
 mod Parser;
 use Parser::Parser as OtherParser;
 // use calculator_parser::calculate;
-
+use std::io::stdin;
+use std::io::stdout;
+use std::io::{self, Write};
  pub fn main(){
 //     //Parser::getinput(); 
 
-    println!("{} ",OtherParser::parse_input("100*100+100+100")); 
 
-    let mut vec : Vec<f32> = Vec::new();
-    vec.push(100.0);
-    vec.push(100.0);
-    vec.push(105.5); 
-    
-    OtherParser::write_to_csv(vec); 
+let mut s=String::new();
+println!("Welcome to the clculator, please enter a calculation to be performed (with operators +,-,*,/,^) ");
+let _= stdout().flush();
+stdin().read_line(&mut s).expect("Did not enter a correct string");
+println!("{}",OtherParser::parse_input(&s.to_string()))
+;
  }

@@ -120,7 +120,7 @@ struct DE{
     array : Vec<Vec<f32>>
 }
 
-trait DEGiver{
+trait DEiver{
     fn RungeKutta(model: &dyn Fn(f32, &Vec<f32>) -> Vec<f32>, initial_conditions: Vec<f32>, t_initial: f32, t_final: f32, dt: f32)->Vec<Vec<f32>>
     {
         let mut X : Vec<Vec<f32>> = Vec::new();
@@ -141,8 +141,8 @@ trait DEGiver{
     }
     fn addVecs(v1: &Vec<f32>, v2: &Vec<f32>)-> Vec<f32>{
         let mut x: Vec<f32> = Vec::new();
-        for i in 0..v1.len(){
-            x.push(v1[i] + v2[i]);
+        for j in 0..v1.len(){
+            x.push(v1[j] + v2[j]);
         }
         return x;
     }
