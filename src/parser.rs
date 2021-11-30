@@ -113,7 +113,15 @@ impl Parser{
         }
         
     }
-    pub fn RungeKutta(model: &dyn Fn(f32, Vec<f32>) -> Vec<f32>, initial_conditions: Vec<f32>, t_initial: f32, t_final: f32, dt: f32)->Vec<Vec<f32>>
+
+}
+
+struct DE{
+    array : Vec<Vec<f32>>
+}
+
+trait DEGiver{
+    fn RungeKutta(model: &dyn Fn(f32, &Vec<f32>) -> Vec<f32>, initial_conditions: Vec<f32>, t_initial: f32, t_final: f32, dt: f32)->Vec<Vec<f32>>
     {
         let mut X : Vec<Vec<f32>> = Vec::new();
         let mut t = t_initial;
@@ -121,23 +129,24 @@ impl Parser{
         X.push(initial_conditions);
         
         for k in 0..(n-1) {
-            let k1 = model(t, X[k]);
-            let k2 = model(t+dt/2.0, addVecs(X[k] , multVecs(k1,1.0/2.0)));
-            let k3 = model(t + dt, addVecs(X[k], multVecs(k2,1.0/2.0)));
-            let k4 = model(t + dt, addVecs(X[k], k3));
-            let dx = multVecs(addVecs(k1, addVecs(multVecs(k2,2), addVecs(multVecs(k3,2), k4))),dt);
-            X.push(addVecs(X[k], dx));
+            let k1 = model(t, &X[k]);
+            let k2 = model(t+dt/2.0, &Self::addVecs(&X[k] , &Self::multVecs(&k1,1.0/2.0)));
+            let k3 = model(t + dt, &Self::addVecs(&X[k], &Self::multVecs(&k2,1.0/2.0)));
+            let k4 = model(t + dt, &Self::addVecs(&X[k], &k3));
+            let dx = Self::multVecs(&Self::addVecs(&k1, &Self::addVecs(&Self::multVecs(&k2,2.),
+             &Self::addVecs(&Self::multVecs(&k3,2.), &k4))),dt);
+            X.push(Self::addVecs(&X[k], &(X[k])));
         }
         return X;
     }
-    pub fn addVecs(v1: Vec<f32>, v2: Vec<f32>)-> Vec<f32>{
+    fn addVecs(v1: &Vec<f32>, v2: &Vec<f32>)-> Vec<f32>{
         let mut x: Vec<f32> = Vec::new();
         for i in 0..v1.len(){
             x.push(v1[i] + v2[i]);
         }
         return x;
     }
-    pub fn multVecs(v1: Vec<f32>, a: f32)-> Vec<f32>{
+    fn multVecs(v1: &Vec<f32>, a: f32)-> Vec<f32>{
         let mut x: Vec<f32> = Vec::new();
         for i in 0..v1.len(){
             x.push(v1[i]*a);
