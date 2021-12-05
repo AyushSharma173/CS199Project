@@ -6,9 +6,16 @@ struct diffeq;
 
 impl diffeq{
 
-    pub fn RungeKutta(model: , initial_conditions: , t_initial: , t_final: , dt: )->
+    pub fn RungeKutta(model: &dyn Fn(f64, Vec<f64>, HashMap) -> i32, initial_conditions: Vec<f64>, t_initial: f64, t_final: , dt: f64)->Vec<Vec<f64>>
     {
-
+        let mut X : Vec<Vec<f64>> = Vector::new();
+        let mut t = t_initial;
+        let n : i64 = (t_final - t_initial)/dt;
+        X.push(initial_conditions);
+        
+        for k in 0..n {
+               
+        }
     }
 
     pub fn LotkaVolteraModel(x: f64, parameters: HashMap) -> {
