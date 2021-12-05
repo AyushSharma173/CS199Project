@@ -13,13 +13,15 @@ impl diffeq{
         let n : i64 = (t_final - t_initial)/dt;
         X.push(initial_conditions);
         
-        for k in 0..n {
-               
+        for k in 0..(n-1) {
+            let k1 = dt*model(t, X[k]);
+            let k2 = dt*model(t+dt/2, x[:,k] + k1/2);
+            let k3 = dt*model(t + dt, X
         }
     }
 
     pub fn LotkaVolteraModel(x: f64, parameters: HashMap) -> {
-
+  ws
     }
 
 }
