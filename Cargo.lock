@@ -27,6 +27,12 @@ dependencies = [
 ]
 
 [[package]]
+name = "calculator-parser"
+version = "1.0.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "d45e26cee4b2ffb5fcbd50c314ca3560168aeb7a6aa8e5f82505b3d9c3eb0c28"
+
+[[package]]
 name = "cfg-if"
 version = "1.0.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -36,6 +42,7 @@ checksum = "baf1de4339761588bc0619e3cbc0120ee582ebb74b53b4efbf79117bd2da40fd"
 name = "cs199project"
 version = "0.1.0"
 dependencies = [
+ "calculator-parser",
  "nom",
 ]
 

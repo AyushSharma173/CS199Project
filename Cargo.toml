@@ -7,3 +7,4 @@ edition = "2018"
 
 [dependencies]
 nom = "6.0" 
+calculator-parser = "1.0.1"
