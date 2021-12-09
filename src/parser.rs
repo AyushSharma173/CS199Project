@@ -1,5 +1,7 @@
 
-#[derive(Debug)]
+use std::fs::File; 
+use std::io::prelude::*; 
+
 pub enum Operator{
     Add,
     Subtract,
@@ -101,5 +103,14 @@ impl Parser{
             Operator::Root => result = num1.powf(1 as f32/num2)
         }
         return result; 
+    }
+
+    pub fn write_to_csv(vec: Vec<f32>){
+        let mut file = File::create("data.csv").expect("unable to open"); 
+        for i in 0..vec.len(){
+            file.write(vec[i].to_string().as_bytes()); 
+            file.write_all(b","); 
+        }
+        
     }
 }
