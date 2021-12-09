@@ -1,13 +1,4 @@
- use nom::{
-    branch::alt,
-    bytes::complete::{tag, tag_no_case},
-    character::complete::{char, digit1, space0},
-    combinator::recognize,
-    multi::many0,
-    sequence::delimited,
-    IResult,
-    number::complete::f32
-};
+
 
 pub enum Operator{
     Add,
@@ -25,40 +16,88 @@ pub enum Parser{
 
 impl Parser{
 
-    pub fn get_input(input: &str) //-> Result<(&str,()),&str>
+    pub fn parse_input(input: &str) -> f32
     {
-        // let mut number1 = 0 as f32;
-        // let mut number2 = 0 as f32; 
-        // let mut oper = Operator::Add; 
+        //let mut eqs = Vec::new();
+            let mut final_result = 0 as f32; 
+            let mut vec: Vec<String> = Self::get_substr(input).0; 
+            let mut oper: Vec<Operator> = Self::get_substr(input).1;
 
-        // //number1 = many0(f32); 
-        // //let oper_str = tag("+");
-        // oper = Self::getOperator("+"); 
-        // //number2 = many0(f32); 
+            println!("vec[0]: {}",vec[0].parse::<f32>().unwrap()); 
+            println!("vec[1]: {}", vec[1].parse::<f32>().unwrap());
 
-        // return (number1,number2,oper)
+            final_result == Self::doEquation(vec[0].parse::<f32>().unwrap(),vec[1].parse::<f32>().unwrap(),&oper[0]);
+
+            println!("final result: {}", final_result);
+            
+            vec.remove(0);
+            vec.remove(1); 
+            oper.remove(0); 
+
+            let mut idx = 0; 
+
+            while !(vec.is_empty()){
+                final_result == Self::doEquation(final_result,vec[0].parse::<f32>().unwrap(),&oper[0]);
+                vec.remove(0);
+                oper.remove(0); 
+            }
+
+            return 0 as f32; 
+    }
+
+    //Adapted from a provided function in CS128 MP2
+    pub fn get_substr(input: &str) ->(Vec<String>,Vec<Operator>){
+        //let mut last = 0; 
+        let mut vec: Vec<String> = Vec::new();
+        let mut operators: Vec<Operator> = Vec::new(); 
+
+        let mut curr_idx = 0; 
+        let mut len = 0; 
+
+        for i in input.chars(){
+            if (i == '+')||(i == '-')||(i == '*')||(i == '/')||(i == '^'){
+                operators.push(Self::getOperator(i)); 
+
+                let mut temp = String::new();
+             
+                temp = input.chars().skip(curr_idx).take(len).collect();   
+                curr_idx += len+1; 
+                len = 0; 
+                vec.push(temp); 
+            }
+            else{
+            len+=1; 
+            if curr_idx+len == input.chars().count()-1{
+                let mut temp = String::new(); 
+                temp = input.chars().skip(curr_idx).take(len+1).collect();
+                vec.push(temp); 
+            }
+            } 
+        }
+
+        return (vec,operators); 
 
     }
 
 
-    pub fn getOperator(input:&str) -> Operator{
+    pub fn getOperator(input:char) -> Operator{
         let mut operation = Operator::Add; 
-        for i in input.chars(){
-        match i{
+        //for i in input.chars(){
+        match input{
             '+' => operation = Operator::Add,
             '-' => operation = Operator::Subtract,
             '*' => operation = Operator::Multiply,
             '/' => operation = Operator::Divide,
             '^' => operation = Operator::Power,
-            _ => continue,
+            _ => unreachable!(),
         }
-    }
+    //}
         return operation; 
     }
 
 
-    fn doEquation(num1:f32,num2:f32,operation:Operator)->f32{
-        let mut result = 0 as f32; 
+    pub fn doEquation(num1:f32,num2:f32,operation:&Operator)->f32{
+        let mut result; 
         match operation{
             Operator::Add => result = num1 + num2,
             Operator::Subtract => result = num1 - num2,
