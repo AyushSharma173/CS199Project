@@ -5,7 +5,7 @@ use Parser::Parser as OtherParser;
  pub fn main(){
 //     //Parser::getinput(); 
 
-    println!("{} ",OtherParser::parse_input("100+100+100")); 
+    println!("{} ",OtherParser::parse_input("100*100+100+100")); 
 
     
  }

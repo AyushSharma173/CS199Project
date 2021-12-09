@@ -1,5 +1,5 @@
 
-
+#[derive(Debug)]
 pub enum Operator{
     Add,
     Subtract,
@@ -18,17 +18,11 @@ impl Parser{
 
     pub fn parse_input(input: &str) -> f32
     {
-        //let mut eqs = Vec::new();
-            let mut final_result = 0 as f32; 
+         
             let mut vec: Vec<String> = Self::get_substr(input).0; 
             let mut oper: Vec<Operator> = Self::get_substr(input).1;
 
-            println!("vec[0]: {}",vec[0].parse::<f32>().unwrap()); 
-            println!("vec[1]: {}", vec[1].parse::<f32>().unwrap());
-
-            final_result == Self::doEquation(vec[0].parse::<f32>().unwrap(),vec[1].parse::<f32>().unwrap(),&oper[0]);
-
-            println!("final result: {}", final_result);
+            let mut final_result = Self::doEquation(vec[0].parse::<f32>().unwrap(),vec[1].parse::<f32>().unwrap(),&oper[0]);
             
             vec.remove(0);
             vec.remove(1); 
@@ -37,12 +31,12 @@ impl Parser{
             let mut idx = 0; 
 
             while !(vec.is_empty()){
-                final_result == Self::doEquation(final_result,vec[0].parse::<f32>().unwrap(),&oper[0]);
+                final_result = Self::doEquation(final_result,vec[0].parse::<f32>().unwrap(),&oper[0]);
                 vec.remove(0);
                 oper.remove(0); 
             }
 
-            return 0 as f32; 
+            return final_result; 
     }
 
     //Adapted from a provided function in CS128 MP2
