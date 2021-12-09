@@ -113,4 +113,35 @@ impl Parser{
         }
         
     }
+    pub fn RungeKutta(model: &dyn Fn(f32, Vec<f32>, HashMap) -> Vec<f32>, initial_conditions: Vec<f32>, t_initial: f32, t_final: , dt: f32)->Vec<Vec<f32>>
+    {
+        let mut X : Vec<Vec<f32>> = Vector::new();
+        let mut t = t_initial;
+        let n : i32 = (t_final - t_initial)/dt;
+        X.push(initial_conditions);
+        
+        for k in 0..(n-1) {
+            let k1 = model(t, X[k]);
+            let k2 = dmodel(t+dt/2, addVecs(X[k] , multVecs(k1,1.0/2)));
+            let k3 = model(t + dt, addVecs(X[k], multVecs(k2,1.0/2));
+            let k4 = model(t + dt, addVecs(X[k], k3));
+            dx = multVecs(addVecs(k1, addVecs(multVecs(k2,2), addVecs(multVecs(k3,2), k4))),dt);
+            X.push(addVecs(X[k], dx));
+        }
+        return X;
+    }
+    pub fn addVecs(v1: Vec<f32>, v2: Vec<f32>){
+        let mut x: Vec<f32> = Vec::new();
+        for i in 0..v1.len(){
+            x.push(v1[i] + v2[i]);
+        }
+        return x;
+    }
+    pub fn multVecs(v1: Vec<f32>, a: f32){
+        let mut x: Vec<f32> = Vec::new();
+        for i in 0..v1.len(){
+            x.push(v1[i]*a);
+        }
+        return x;
+    }
 }
