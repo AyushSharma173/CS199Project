@@ -6,7 +6,7 @@ Project Introduction:
 
 Please provide a brief description of your project. List the goals and objectives of your project and explain why you’ve chosen to work on this project.
 
-We intend to create a differential equation solver using Rust. The goal would be to create an application that can parse basic mathemtical functions, and use that as a model for an n^th order differential equation, and numerically solve that equation over a specific time period. The reason we chose this project is because differential equations are an extremely important field of mathematics in engineering and physics, and in a lot of cases, cannot be solved analytically. In these cases, numerical methods are useful, and that is what the project seeks to accomplish. 
+We intend to create a calculator with a differential equation solver using Rust. The goal would be to create an application that can parse basic mathemtical functions, and also a model for an n^th order differential equation that will be numerically solved over a specific time period. The reason we chose this project is because differential equations are an extremely important field of mathematics in engineering and physics, and in a lot of cases, cannot be solved analytically. In these cases, numerical methods are useful, and that is what the project seeks to accomplish. 
 
 System Overview
 
